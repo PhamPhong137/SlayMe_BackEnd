@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const httpErrors = require("http-errors");
 const getLocalIP = require("./utils/ipconfig");
+const cors = require("cors");
 
 
 const {
@@ -17,8 +18,15 @@ const {
 require('dotenv').config();
 const app = express();
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(bodyParser.json());
 app.use(morgan("dev"));
+
+app.get("/", (req, res) => {
+    res.send("Welcome to SlayMe API");
+});
 
 const db = require("./models");
 
